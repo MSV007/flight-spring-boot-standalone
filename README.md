@@ -172,3 +172,17 @@ Response :
         "currency": "EUR"
     }
 ]
+
+Case 4 : If Route is not available
+
+http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEM&sortBy=price
+
+Response : 
+
+{
+    "timestamp": "2023-08-18T07:39:53.076+00:00",
+    "status": 404,
+    "error": "Not Found",
+    "message": "Flights are not available for this route",
+    "path": "/flightsAPI/v1/flights/search"
+}
