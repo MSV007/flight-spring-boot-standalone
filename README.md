@@ -26,6 +26,57 @@ Tips:
 
 API URLs : 
 
+Case 1 : find list of flights form Origin to Destination
+
+http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL
+
+Response : 
+
+[
+    {
+        "flightNumber": "F101",
+        "origin": "BOM",
+        "destination": "DEL",
+        "departureTime": "2023-08-22 20:30",
+        "arrivalTime": "2023-08-22 21:30",
+        "duration": "60 minute",
+        "price": 80,
+        "currency": "EUR"
+    },
+    {
+        "flightNumber": "G101",
+        "origin": "BOM",
+        "destination": "DEL",
+        "departureTime": "2023-08-22 18:00",
+        "arrivalTime": "2023-08-22 19:30",
+        "duration": "90 minute",
+        "price": 100,
+        "currency": "EUR"
+    },
+    {
+        "flightNumber": "F201",
+        "origin": "BOM",
+        "destination": "DEL",
+        "departureTime": "2023-08-22 21:15",
+        "arrivalTime": "2023-08-22 22:30",
+        "duration": "75 minute",
+        "price": 80,
+        "currency": "EUR"
+    },
+    {
+        "flightNumber": "G01",
+        "origin": "BOM",
+        "destination": "DEL",
+        "departureTime": "2023-08-22 20:20",
+        "arrivalTime": "2023-08-22 21:30",
+        "duration": "70 minute",
+        "price": 100,
+        "currency": "EUR"
+    }
+]
+
+Case 2 : find list of flights form Origin to Destination and sortBy duration
+
 http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL&sortBy=duration
 
 Response : 
@@ -72,6 +123,8 @@ Response :
         "currency": "EUR"
     }
 ]
+
+Case 3 : find list of flights form Origin to Destination and sortBy price
 
 http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL&sortBy=price
 
