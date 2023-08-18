@@ -23,7 +23,6 @@ Use case:
 
 Tips:
  - Use at least Java 8 in combination with Spring framework
- - Pay attention to code construction, clean code and programming paradigm. We will look at minor details
- - 
+
 API URL : 
 http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL&sortBy=duration
