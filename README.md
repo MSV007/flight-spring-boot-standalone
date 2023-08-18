@@ -74,7 +74,9 @@ Response :
 ]
 
 http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL&sortBy=price
+
 Response : 
+
 [
     {
         "flightNumber": "F101",
