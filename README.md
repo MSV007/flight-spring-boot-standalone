@@ -28,7 +28,7 @@ API URLs :
 
 Case 1 : find list of flights form Origin to Destination
 
-http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL
+http://localhost:8085/flightsapi/flights/v1/getFlights?origin=BOM&destination=DEL
 
 Response : 
 
@@ -77,7 +77,7 @@ Response :
 
 Case 2 : find list of flights form Origin to Destination and sortBy duration
 
-http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL&sortBy=duration
+http://localhost:8085/flightsapi/flights/v1/getFlights?origin=BOM&destination=DEL&sortBy=DURATION
 
 Response : 
 
@@ -126,7 +126,7 @@ Response :
 
 Case 3 : find list of flights form Origin to Destination and sortBy price
 
-http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEL&sortBy=price
+http://localhost:8085/flightsapi/flights/v1/getFlights?origin=BOM&destination=DEL&sortBy=PRICE
 
 Response : 
 
@@ -175,7 +175,7 @@ Response :
 
 Case 4 : If Route is not available
 
-http://localhost:8085/flightsAPI/v1/flights/search?origin=BOM&destination=DEM&sortBy=price
+http://localhost:8085/flightsapi/flights/v1/getFlights?origin=BOM&destination=SAL&sortBy=PRICE
 
 Response : 
 
