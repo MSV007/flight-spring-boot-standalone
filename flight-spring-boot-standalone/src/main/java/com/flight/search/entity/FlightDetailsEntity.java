@@ -1,14 +1,19 @@
 package com.flight.search.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import java.time.LocalDateTime;
+import lombok.*;
 
 /** The type Flight details entity.
  * @author Manish Kumar
  */
 @Entity
 @Table(name = "FLIGHT_DETAILS")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class FlightDetailsEntity {
 
   @Id
@@ -22,13 +27,13 @@ public class FlightDetailsEntity {
   private String destination;
 
   @Column(name = "departure_time")
-  private String departureTime;
+  private LocalDateTime departureTime;
 
   @Column(name = "arrival_time")
-  private String arrivalTime;
+  private LocalDateTime arrivalTime;
 
   @Column(name = "price")
-  private int price;
+  private double price;
 
   @Column(name = "currency")
   private String currency;

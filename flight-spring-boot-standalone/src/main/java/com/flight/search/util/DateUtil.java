@@ -28,11 +28,8 @@ public static String FORMATTER_PATTERN = "yyyy-MM-dd HH:mm";
    * @param arrivalTime the arrival time
    * @return the duration
    */
-public static String getDuration(String departureTime, String arrivalTime) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMATTER_PATTERN);
-    LocalDateTime dateTime1 = LocalDateTime.parse(departureTime, formatter);
-    LocalDateTime dateTime2 = LocalDateTime.parse(arrivalTime, formatter);
-    Duration duration = Duration.between(dateTime1, dateTime2);
+public static String getDuration(LocalDateTime departureTime, LocalDateTime arrivalTime) {
+    Duration duration = Duration.between(departureTime, arrivalTime);
     int minutes = ((int) duration.toMinutes());
     return minutes + SPACE_SEPARATOR + MINUTE;
   }

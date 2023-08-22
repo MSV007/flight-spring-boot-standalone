@@ -1,6 +1,7 @@
 package com.flight.search.service;
 
 import com.flight.search.dto.FlightDetailsDto;
+import com.flight.search.enums.SortBy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
@@ -16,13 +17,11 @@ public interface FlightService {
    *
    * @param origin the origin
    * @param destination the destination
-   * @param departureDate the departure date
    * @param sortBy the sort by
    * @return the list
    */
 List<FlightDetailsDto> searchFlights(
       @RequestParam String origin,
       @RequestParam String destination,
-      @RequestParam(required = false) String departureDate,
-      @RequestParam(required = false) String sortBy);
+      @RequestParam(required = false) SortBy sortBy) throws Exception;
 }
