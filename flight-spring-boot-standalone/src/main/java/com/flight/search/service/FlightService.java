@@ -12,14 +12,16 @@ import java.util.List;
  */
 public interface FlightService {
 
-  /**
-   * Search flights list.
-   *
-   * @param origin the origin
-   * @param destination the destination
-   * @param sortBy the sort by
-   * @return the list
-   */
+
+/**
+ * Search flights list.
+ *
+ * @param origin the origin
+ * @param destination the destination
+ * @param sortBy the sort by
+ * @return the list
+ * @throws Exception the exception
+ */
 List<FlightDetailsDto> searchFlights(
       String origin,
       String destination,

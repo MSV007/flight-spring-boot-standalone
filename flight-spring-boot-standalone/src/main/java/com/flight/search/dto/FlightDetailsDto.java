@@ -1,8 +1,6 @@
 package com.flight.search.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +10,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @Builder
+@Setter
+@Getter
 public class FlightDetailsDto {
   private String flightNumber;
   private String origin;

@@ -10,9 +10,9 @@ import lombok.*;
 @Entity
 @Table(name = "FLIGHT_DETAILS")
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class FlightDetailsEntity {
 
@@ -37,4 +37,5 @@ public class FlightDetailsEntity {
 
   @Column(name = "currency")
   private String currency;
+
 }

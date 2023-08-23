@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.flight.search.exception.ErrorConstant.*;
+
 @RestControllerAdvice
 public class FlightControllerAdvice {
 
@@ -16,9 +18,9 @@ public class FlightControllerAdvice {
   @ExceptionHandler(FlightNotFoundException.class)
   public Map<String, String> handleBusinessException(FlightNotFoundException ex) {
     Map<String, String> errorMap = new HashMap<>();
-    errorMap.put("timestamp", String.valueOf(LocalDateTime.now()));
-    errorMap.put("errorMessage", ex.getMessage());
-    errorMap.put("error", HttpStatus.NOT_FOUND.name());
+    errorMap.put(TIMESTAMP, String.valueOf(LocalDateTime.now()));
+    errorMap.put(ERROR_MESSAGE, ex.getMessage());
+    errorMap.put(ERROR, HttpStatus.NOT_FOUND.name());
     return errorMap;
   }
 
@@ -26,9 +28,9 @@ public class FlightControllerAdvice {
   @ExceptionHandler(SQLException.class)
   public Map<String, String> handleSQLException(SQLException ex) {
     Map<String, String> errorMap = new HashMap<>();
-    errorMap.put("timestamp", String.valueOf(LocalDateTime.now()));
-    errorMap.put("errorMessage", ex.getMessage());
-    errorMap.put("error", HttpStatus.INTERNAL_SERVER_ERROR.name());
+    errorMap.put(TIMESTAMP, String.valueOf(LocalDateTime.now()));
+    errorMap.put(ERROR_MESSAGE, ex.getMessage());
+    errorMap.put(ERROR, HttpStatus.INTERNAL_SERVER_ERROR.name());
     return errorMap;
   }
 
@@ -36,9 +38,9 @@ public class FlightControllerAdvice {
   @ExceptionHandler(GenericException.class)
   public Map<String, String> handleGenericException(GenericException ex) {
     Map<String, String> errorMap = new HashMap<>();
-    errorMap.put("timestamp", String.valueOf(LocalDateTime.now()));
-    errorMap.put("errorMessage", ex.getMessage());
-    errorMap.put("error", HttpStatus.UNPROCESSABLE_ENTITY.name());
+    errorMap.put(TIMESTAMP, String.valueOf(LocalDateTime.now()));
+    errorMap.put(ERROR_MESSAGE, ex.getMessage());
+    errorMap.put(ERROR, HttpStatus.UNPROCESSABLE_ENTITY.name());
     return errorMap;
   }
 
