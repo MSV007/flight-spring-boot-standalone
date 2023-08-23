@@ -28,7 +28,7 @@ public class FlightControllerAdvice {
     Map<String, String> errorMap = new HashMap<>();
     errorMap.put("timestamp", String.valueOf(LocalDateTime.now()));
     errorMap.put("errorMessage", ex.getMessage());
-    errorMap.put("error", HttpStatus.NOT_FOUND.name());
+    errorMap.put("error", HttpStatus.INTERNAL_SERVER_ERROR.name());
     return errorMap;
   }
 
@@ -38,7 +38,7 @@ public class FlightControllerAdvice {
     Map<String, String> errorMap = new HashMap<>();
     errorMap.put("timestamp", String.valueOf(LocalDateTime.now()));
     errorMap.put("errorMessage", ex.getMessage());
-    errorMap.put("error", HttpStatus.NOT_FOUND.name());
+    errorMap.put("error", HttpStatus.INTERNAL_SERVER_ERROR.name());
     return errorMap;
   }
 
