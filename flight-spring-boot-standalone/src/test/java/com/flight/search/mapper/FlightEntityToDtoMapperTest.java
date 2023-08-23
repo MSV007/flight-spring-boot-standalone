@@ -12,11 +12,16 @@ import java.util.List;
 
 import static com.flight.search.util.DateUtil.getDuration;
 
+/**
+ * The type Flight entity to dto mapper test.
+ * @author Manish Kumar
+ */
 @SpringBootTest
 public class FlightEntityToDtoMapperTest {
 
-    @Test
-    public void testMapToDTOs() {
+  /** Test map to dt os. */
+  @Test
+  public void testMapToDTOs() {
         // Create a list of FlightDetailsEntity objects
         List<FlightDetailsEntity> flights = new ArrayList<>();
         flights.add(

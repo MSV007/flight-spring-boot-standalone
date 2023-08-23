@@ -2,6 +2,7 @@ package com.flight.search.service;
 
 import com.flight.search.dto.FlightDetailsDto;
 import com.flight.search.entity.FlightDetailsEntity;
+import com.flight.search.enums.DirectionBy;
 import com.flight.search.enums.SortBy;
 import com.flight.search.exception.FlightNotFoundException;
 import com.flight.search.exception.SQLException;
@@ -37,7 +38,7 @@ public class FlightServiceImpl implements FlightService {
   }
 
   @Override
-  public List<FlightDetailsDto> searchFlights(String origin, String destination, SortBy sortBy)
+  public List<FlightDetailsDto> searchFlights(String origin, String destination, SortBy sortBy, DirectionBy directionBy)
       throws Exception {
     List<FlightDetailsEntity> flightEntityList;
     List<FlightDetailsDto> flightDtoList;
@@ -50,7 +51,7 @@ public class FlightServiceImpl implements FlightService {
       throw new FlightNotFoundException(FILE_NOT_FOUND_EXCEPTION_MESSAGE);
     }
     try {
-      flightDtoList = getFlightDetailsDtos(sortBy, flightEntityList);
+      flightDtoList = getFlightDetailsDtos(sortBy, directionBy, flightEntityList);
     } catch (Exception e) {
       throw new GenericException(GENERIC_EXCEPTION_MESSAGE, e);
     }
@@ -58,15 +59,21 @@ public class FlightServiceImpl implements FlightService {
   }
 
   private List<FlightDetailsDto> getFlightDetailsDtos(
-      SortBy sortBy, List<FlightDetailsEntity> flightEntityList) throws GenericException {
+      SortBy sortBy, DirectionBy directionBy, List<FlightDetailsEntity> flightEntityList) throws GenericException {
     List<FlightDetailsDto> flightDtoList;
     try {
       flightDtoList = FlightEntityToDtoMapper.mapToDTOs(flightEntityList);
       if (sortBy != null) {
         if (sortBy == SortBy.PRICE) {
           flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice));
+          if(directionBy == DirectionBy.DESC){
+            flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice).reversed());
+          }
         } else if (sortBy == SortBy.DURATION) {
           flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration));
+          if(directionBy == DirectionBy.DESC){
+            flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration).reversed());
+          }
         }
       }
     } catch (Exception e) {

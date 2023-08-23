@@ -2,6 +2,7 @@ package com.flight.search.service;
 
 import com.flight.search.dto.FlightDetailsDto;
 import com.flight.search.entity.FlightDetailsEntity;
+import com.flight.search.enums.DirectionBy;
 import com.flight.search.enums.SortBy;
 import com.flight.search.exception.FlightNotFoundException;
 import com.flight.search.exception.GenericException;
@@ -17,6 +18,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.flight.search.util.DateUtil.getDuration;
+
 /**
  * The type Flight service tests.
  *
@@ -30,13 +33,60 @@ public class FlightServiceTests {
   @Autowired private FlightService flightService;
 
   /**
-   * Test search flights sort by price.
+   * Test search flights sort by price asc order.
    *
    * @throws Exception the exception
    */
   @Test
-  public void testSearchFlights_SortByPrice() throws Exception {
+  public void testSearchFlights_SortByPriceAscOrder() throws Exception {
     List<FlightDetailsEntity> flights = new ArrayList<>();
+    flights.add(
+        FlightDetailsEntity.builder()
+            .flightNumber("B101")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .price(750)
+            .currency("EUR")
+            .build());
+    flights.add(
+        FlightDetailsEntity.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .price(850)
+            .currency("EUR")
+            .build());
+    List<FlightDetailsDto> expectedFlights = flightEntityToDtoMapper.mapToDTOs(flights);
+    // Call the searchFlights() method
+    List<FlightDetailsDto> actualFlights =
+        flightService.searchFlights("AMS", "BOM", SortBy.PRICE, DirectionBy.ASC);
+
+    // Assert that the actual flights are the same as the expected flights
+    Assertions.assertEquals(expectedFlights, actualFlights);
+  }
+
+  /**
+   * Test search flights sort by price desc order.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testSearchFlights_SortByPriceDescOrder() throws Exception {
+    List<FlightDetailsEntity> flights = new ArrayList<>();
+    flights.add(
+        FlightDetailsEntity.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .price(850)
+            .currency("EUR")
+            .build());
     flights.add(
         FlightDetailsEntity.builder()
             .flightNumber("B101")
@@ -49,16 +99,31 @@ public class FlightServiceTests {
             .build());
     List<FlightDetailsDto> expectedFlights = flightEntityToDtoMapper.mapToDTOs(flights);
     // Call the searchFlights() method
-    List<FlightDetailsDto> actualFlights = flightService.searchFlights("AMS", "BOM", SortBy.PRICE);
+    List<FlightDetailsDto> actualFlights =
+        flightService.searchFlights("AMS", "BOM", SortBy.PRICE, DirectionBy.DESC);
 
     // Assert that the actual flights are the same as the expected flights
     Assertions.assertEquals(expectedFlights, actualFlights);
   }
 
-  /** Test search flights sort by duration. @throws Exception the exception */
+  /**
+   * Test search flights sort by duration asc order.
+   *
+   * @throws Exception the exception
+   */
   @Test
-  public void testSearchFlights_SortByDuration() throws Exception {
+  public void testSearchFlights_SortByDurationAscOrder() throws Exception {
     List<FlightDetailsEntity> flights = new ArrayList<>();
+    flights.add(
+        FlightDetailsEntity.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .price(850)
+            .currency("EUR")
+            .build());
     flights.add(
         FlightDetailsEntity.builder()
             .flightNumber("B101")
@@ -73,7 +138,44 @@ public class FlightServiceTests {
 
     // Call the searchFlights() method
     List<FlightDetailsDto> actualFlights =
-        flightService.searchFlights("AMS", "BOM", SortBy.DURATION);
+        flightService.searchFlights("AMS", "BOM", SortBy.DURATION, DirectionBy.ASC);
+    // Assert that the actual flights are the same as the expected flights
+    Assertions.assertEquals(expectedFlights, actualFlights);
+  }
+
+  /**
+   * Test search flights sort by duration desc order.
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testSearchFlights_SortByDurationDescOrder() throws Exception {
+    List<FlightDetailsEntity> flights = new ArrayList<>();
+    flights.add(
+        FlightDetailsEntity.builder()
+            .flightNumber("B101")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .price(750)
+            .currency("EUR")
+            .build());
+    flights.add(
+        FlightDetailsEntity.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .price(850)
+            .currency("EUR")
+            .build());
+    List<FlightDetailsDto> expectedFlights = flightEntityToDtoMapper.mapToDTOs(flights);
+
+    // Call the searchFlights() method
+    List<FlightDetailsDto> actualFlights =
+        flightService.searchFlights("AMS", "BOM", SortBy.DURATION, DirectionBy.DESC);
     // Assert that the actual flights are the same as the expected flights
     Assertions.assertEquals(expectedFlights, actualFlights);
   }
@@ -84,6 +186,7 @@ public class FlightServiceTests {
     String origin = "AMS";
     String destination = "BOL";
     SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.ASC;
 
     // Create a FlightNotFoundException object
     FlightNotFoundException thrownException =
@@ -91,7 +194,7 @@ public class FlightServiceTests {
             FlightNotFoundException.class,
             () -> {
               List<FlightDetailsDto> flights =
-                  flightService.searchFlights(origin, destination, sortBy);
+                  flightService.searchFlights(origin, destination, sortBy, directionBy);
               if (flights.isEmpty()) {
                 throw new FlightNotFoundException("Flights are not available for this route :");
               }
@@ -108,6 +211,7 @@ public class FlightServiceTests {
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.ASC;
 
     // Create a GenericException object
     GenericException thrownException =
@@ -115,8 +219,8 @@ public class FlightServiceTests {
             GenericException.class,
             () -> {
               List<FlightDetailsDto> flights =
-                  flightService.searchFlights(origin, destination, sortBy);
-                throw new GenericException("An error occurred while processing request :");
+                  flightService.searchFlights(origin, destination, sortBy, directionBy);
+              throw new GenericException("An error occurred while processing request :");
             });
 
     // Assert that the message of the exception is correct
@@ -130,6 +234,7 @@ public class FlightServiceTests {
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.ASC;
 
     // Create a SQLException object
     SQLException thrownException =
@@ -137,8 +242,8 @@ public class FlightServiceTests {
             SQLException.class,
             () -> {
               List<FlightDetailsDto> flights =
-                  flightService.searchFlights(origin, destination, sortBy);
-                throw new SQLException("An SQL error occurred :");
+                  flightService.searchFlights(origin, destination, sortBy, directionBy);
+              throw new SQLException("An SQL error occurred :");
             });
 
     // Assert that the message of the exception is correct

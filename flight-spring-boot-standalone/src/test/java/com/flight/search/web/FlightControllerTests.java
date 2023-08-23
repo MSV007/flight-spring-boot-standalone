@@ -1,6 +1,7 @@
 package com.flight.search.web;
 
 import com.flight.search.dto.FlightDetailsDto;
+import com.flight.search.enums.DirectionBy;
 import com.flight.search.enums.SortBy;
 import com.flight.search.exception.FlightNotFoundException;
 import com.flight.search.exception.GenericException;
@@ -37,7 +38,6 @@ class FlightControllerTests {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
-    SortBy sortBy = null;
     List<FlightDetailsDto> expectedFlights = new ArrayList<>();
     expectedFlights.add(
         FlightDetailsDto.builder()
@@ -53,11 +53,26 @@ class FlightControllerTests {
             .price(750)
             .currency("EUR")
             .build());
-    Mockito.when(flightService.searchFlights(origin, destination, sortBy))
+    expectedFlights.add(
+        FlightDetailsDto.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .duration(
+                getDuration(
+                    LocalDateTime.parse("2023-08-28T12:00:00"),
+                    LocalDateTime.parse("2023-08-28T18:30:00")))
+            .price(850)
+            .currency("EUR")
+            .build());
+    Mockito.when(flightService.searchFlights(origin, destination, null, null))
         .thenReturn(expectedFlights);
 
     // Act
-    List<FlightDetailsDto> actualFlights = flightController.getFlights(origin, destination, sortBy);
+    List<FlightDetailsDto> actualFlights =
+        flightController.getFlights(origin, destination, null, null);
 
     // Assert
     assertEquals(expectedFlights, actualFlights);
@@ -65,11 +80,12 @@ class FlightControllerTests {
 
   /** Test get flights origin to destination and sorted by price. using in-memory database */
   @Test
-  public void testGetFlights_OriginToDestinationAndSortedByPrice() throws Exception {
+  public void testGetFlights_OriginToDestinationAndSortedByPriceAscOrder() throws Exception {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.PRICE;
+    DirectionBy directionBy = DirectionBy.ASC;
     List<FlightDetailsDto> expectedFlights = new ArrayList<>();
     expectedFlights.add(
         FlightDetailsDto.builder()
@@ -85,11 +101,71 @@ class FlightControllerTests {
             .price(750)
             .currency("EUR")
             .build());
-    Mockito.when(flightService.searchFlights(origin, destination, sortBy))
+    expectedFlights.add(
+        FlightDetailsDto.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .duration(
+                getDuration(
+                    LocalDateTime.parse("2023-08-28T12:00:00"),
+                    LocalDateTime.parse("2023-08-28T18:30:00")))
+            .price(850)
+            .currency("EUR")
+            .build());
+    Mockito.when(flightService.searchFlights(origin, destination, sortBy, directionBy))
+        .thenReturn(expectedFlights);
+    // Act
+    List<FlightDetailsDto> actualFlights =
+        flightController.getFlights(origin, destination, sortBy, directionBy);
+    // Assert
+    assertEquals(expectedFlights, actualFlights);
+  }
+
+  @Test
+  public void testGetFlights_OriginToDestinationAndSortedByPriceDescOrder() throws Exception {
+    // Arrange
+    String origin = "AMS";
+    String destination = "BOM";
+    SortBy sortBy = SortBy.PRICE;
+    DirectionBy directionBy = DirectionBy.DESC;
+    List<FlightDetailsDto> expectedFlights = new ArrayList<>();
+    expectedFlights.add(
+        FlightDetailsDto.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .duration(
+                getDuration(
+                    LocalDateTime.parse("2023-08-28T12:00:00"),
+                    LocalDateTime.parse("2023-08-28T18:30:00")))
+            .price(850)
+            .currency("EUR")
+            .build());
+    expectedFlights.add(
+        FlightDetailsDto.builder()
+            .flightNumber("B101")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .duration(
+                getDuration(
+                    LocalDateTime.parse("2023-08-28T12:00:00"),
+                    LocalDateTime.parse("2023-08-28T19:30:00")))
+            .price(750)
+            .currency("EUR")
+            .build());
+    Mockito.when(flightService.searchFlights(origin, destination, sortBy, directionBy))
         .thenReturn(expectedFlights);
 
     // Act
-    List<FlightDetailsDto> actualFlights = flightController.getFlights(origin, destination, sortBy);
+    List<FlightDetailsDto> actualFlights =
+        flightController.getFlights(origin, destination, sortBy, directionBy);
 
     // Assert
     assertEquals(expectedFlights, actualFlights);
@@ -97,11 +173,59 @@ class FlightControllerTests {
 
   /** Test get flights origin to destination and sorted by duration. using in-memory database */
   @Test
-  public void testGetFlights_OriginToDestinationAndSortedByDuration() throws Exception {
+  public void testGetFlights_OriginToDestinationAndSortedByDurationAscOrder() throws Exception {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.ASC;
+    List<FlightDetailsDto> expectedFlights = new ArrayList<>();
+    expectedFlights.add(
+        FlightDetailsDto.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .duration(
+                getDuration(
+                    LocalDateTime.parse("2023-08-28T12:00:00"),
+                    LocalDateTime.parse("2023-08-28T18:30:00")))
+            .price(850)
+            .currency("EUR")
+            .build());
+    expectedFlights.add(
+        FlightDetailsDto.builder()
+            .flightNumber("B101")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .duration(
+                getDuration(
+                    LocalDateTime.parse("2023-08-28T12:00:00"),
+                    LocalDateTime.parse("2023-08-28T19:30:00")))
+            .price(750)
+            .currency("EUR")
+            .build());
+    Mockito.when(flightService.searchFlights(origin, destination, sortBy, directionBy))
+        .thenReturn(expectedFlights);
+
+    // Act
+    List<FlightDetailsDto> actualFlights =
+        flightController.getFlights(origin, destination, sortBy, directionBy);
+
+    // Assert
+    Assertions.assertEquals(expectedFlights, actualFlights);
+  }
+
+  @Test
+  public void testGetFlights_OriginToDestinationAndSortedByDurationDescOrder() throws Exception {
+    // Arrange
+    String origin = "AMS";
+    String destination = "BOM";
+    SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.DESC;
     List<FlightDetailsDto> expectedFlights = new ArrayList<>();
     expectedFlights.add(
         FlightDetailsDto.builder()
@@ -117,12 +241,25 @@ class FlightControllerTests {
             .price(750)
             .currency("EUR")
             .build());
-    Mockito.when(flightService.searchFlights(origin, destination, sortBy))
+    expectedFlights.add(
+        FlightDetailsDto.builder()
+            .flightNumber("B102")
+            .origin("AMS")
+            .destination("BOM")
+            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .duration(
+                getDuration(
+                    LocalDateTime.parse("2023-08-28T12:00:00"),
+                    LocalDateTime.parse("2023-08-28T18:30:00")))
+            .price(850)
+            .currency("EUR")
+            .build());
+    Mockito.when(flightService.searchFlights(origin, destination, sortBy, directionBy))
         .thenReturn(expectedFlights);
-
     // Act
-    List<FlightDetailsDto> actualFlights = flightController.getFlights(origin, destination, sortBy);
-
+    List<FlightDetailsDto> actualFlights =
+        flightController.getFlights(origin, destination, sortBy, directionBy);
     // Assert
     Assertions.assertEquals(expectedFlights, actualFlights);
   }
@@ -134,6 +271,7 @@ class FlightControllerTests {
     String origin = "AMS";
     String destination = "BOL";
     SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.ASC;
 
     // Create a FlightNotFoundException object
     FlightNotFoundException thrownException =
@@ -141,7 +279,7 @@ class FlightControllerTests {
             FlightNotFoundException.class,
             () -> {
               List<FlightDetailsDto> flights =
-                  flightController.getFlights(origin, destination, sortBy);
+                  flightController.getFlights(origin, destination, sortBy, directionBy);
               if (flights.isEmpty()) {
                 throw new FlightNotFoundException("Flights are not available for this route :");
               }
@@ -158,6 +296,7 @@ class FlightControllerTests {
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.ASC;
 
     // Create a SQLException object
     SQLException thrownException =
@@ -165,7 +304,7 @@ class FlightControllerTests {
             SQLException.class,
             () -> {
               List<FlightDetailsDto> flights =
-                  flightController.getFlights(origin, destination, sortBy);
+                  flightController.getFlights(origin, destination, sortBy, directionBy);
               throw new SQLException("An SQL error occurred :");
             });
     // Assert that the message of the exception is correct
@@ -179,6 +318,7 @@ class FlightControllerTests {
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.DURATION;
+    DirectionBy directionBy = DirectionBy.ASC;
 
     // Create a GenericException object
     GenericException thrownException =
@@ -186,7 +326,7 @@ class FlightControllerTests {
             GenericException.class,
             () -> {
               List<FlightDetailsDto> flights =
-                  flightController.getFlights(origin, destination, sortBy);
+                  flightController.getFlights(origin, destination, sortBy, directionBy);
               throw new GenericException("An error occurred while processing request :");
             });
     // Assert that the message of the exception is correct

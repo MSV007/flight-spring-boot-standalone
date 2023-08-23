@@ -16,6 +16,6 @@ insert into FLIGHT_DETAILS(flight_number, origin, destination, departure_time, a
 insert into FLIGHT_DETAILS(flight_number, origin, destination, departure_time, arrival_time, price, currency) values('E201','DEL', 'BOM', '2023-08-28T18:45:00', '2023-08-28T20:15:00', 100, 'EUR');
 insert into FLIGHT_DETAILS(flight_number, origin, destination, departure_time, arrival_time, price, currency) values('F201','BOM', 'DEL', '2023-08-28T21:15:00', '2023-08-28T22:30:00', 80, 'EUR');
 insert into FLIGHT_DETAILS(flight_number, origin, destination, departure_time, arrival_time, price, currency) values('G01','BOM', 'DEL', '2023-08-28T20:20:00', '2023-08-28T21:30:00', 100, 'EUR');
-
+insert into FLIGHT_DETAILS(flight_number, origin, destination, departure_time, arrival_time, price, currency) values('B102','AMS', 'BOM', '2023-08-28T12:00:00', '2023-08-28T18:30:00', 850, 'EUR');
 
 COMMIT;

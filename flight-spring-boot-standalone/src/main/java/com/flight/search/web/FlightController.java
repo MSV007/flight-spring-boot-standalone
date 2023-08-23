@@ -1,6 +1,7 @@
 package com.flight.search.web;
 
 import com.flight.search.dto.FlightDetailsDto;
+import com.flight.search.enums.DirectionBy;
 import com.flight.search.enums.SortBy;
 import com.flight.search.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class FlightController {
   public List<FlightDetailsDto> getFlights(
       @RequestParam String origin,
       @RequestParam String destination,
-      @RequestParam(required = false) SortBy sortBy) throws Exception{
-    return flightService.searchFlights(origin, destination, sortBy);
+      @RequestParam(required = false) SortBy sortBy,
+      @RequestParam(required = false) DirectionBy directionBy) throws Exception{
+    return flightService.searchFlights(origin, destination, sortBy, directionBy);
   }
 }
