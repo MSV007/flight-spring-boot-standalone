@@ -32,13 +32,13 @@ public class FlightControllerAdvice {
     return errorMap;
   }
 
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
   @ExceptionHandler(GenericException.class)
   public Map<String, String> handleGenericException(GenericException ex) {
     Map<String, String> errorMap = new HashMap<>();
     errorMap.put("timestamp", String.valueOf(LocalDateTime.now()));
     errorMap.put("errorMessage", ex.getMessage());
-    errorMap.put("error", HttpStatus.INTERNAL_SERVER_ERROR.name());
+    errorMap.put("error", HttpStatus.UNPROCESSABLE_ENTITY.name());
     return errorMap;
   }
 
