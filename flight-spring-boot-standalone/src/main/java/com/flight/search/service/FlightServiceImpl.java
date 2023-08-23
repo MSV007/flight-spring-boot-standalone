@@ -25,7 +25,16 @@ import static com.flight.search.exception.ErrorConstant.*;
 @Service
 public class FlightServiceImpl implements FlightService {
 
-  @Autowired private FlightRepository flightRepository;
+  private FlightRepository flightRepository;
+
+  /**
+   * Instantiates a new Flight service.
+   *
+   * @param flightRepository the flight repository
+   */
+  public FlightServiceImpl(final FlightRepository flightRepository) {
+    this.flightRepository = flightRepository;
+  }
 
   @Override
   public List<FlightDetailsDto> searchFlights(String origin, String destination, SortBy sortBy)
