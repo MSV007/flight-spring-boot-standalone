@@ -2,7 +2,7 @@ package com.flight.search.service;
 
 import com.flight.search.dto.FlightDetailsDto;
 import com.flight.search.entity.FlightDetailsEntity;
-import com.flight.search.enums.DirectionBy;
+import com.flight.search.enums.OrderBy;
 import com.flight.search.enums.SortBy;
 import com.flight.search.exception.FlightNotFoundException;
 import com.flight.search.exception.SQLException;
@@ -10,7 +10,6 @@ import com.flight.search.exception.GenericException;
 import com.flight.search.mapper.FlightEntityToDtoMapper;
 import com.flight.search.repo.FlightRepository;
 import org.hibernate.JDBCException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -38,7 +37,7 @@ public class FlightServiceImpl implements FlightService {
   }
 
   @Override
-  public List<FlightDetailsDto> searchFlights(String origin, String destination, SortBy sortBy, DirectionBy directionBy)
+  public List<FlightDetailsDto> searchFlights(String origin, String destination, SortBy sortBy, OrderBy orderBy)
       throws Exception {
     List<FlightDetailsEntity> flightEntityList;
     List<FlightDetailsDto> flightDtoList;
@@ -51,7 +50,7 @@ public class FlightServiceImpl implements FlightService {
       throw new FlightNotFoundException(FILE_NOT_FOUND_EXCEPTION_MESSAGE);
     }
     try {
-      flightDtoList = getFlightDetailsDtos(sortBy, directionBy, flightEntityList);
+      flightDtoList = getFlightDetailsDtos(sortBy, orderBy, flightEntityList);
     } catch (Exception e) {
       throw new GenericException(GENERIC_EXCEPTION_MESSAGE, e);
     }
@@ -59,19 +58,19 @@ public class FlightServiceImpl implements FlightService {
   }
 
   private List<FlightDetailsDto> getFlightDetailsDtos(
-      SortBy sortBy, DirectionBy directionBy, List<FlightDetailsEntity> flightEntityList) throws GenericException {
+          SortBy sortBy, OrderBy orderBy, List<FlightDetailsEntity> flightEntityList) throws GenericException {
     List<FlightDetailsDto> flightDtoList;
     try {
       flightDtoList = FlightEntityToDtoMapper.mapToDTOs(flightEntityList);
       if (sortBy != null) {
         if (sortBy == SortBy.PRICE) {
           flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice));
-          if(directionBy == DirectionBy.DESC){
+          if(orderBy == OrderBy.DESC){
             flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice).reversed());
           }
         } else if (sortBy == SortBy.DURATION) {
           flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration));
-          if(directionBy == DirectionBy.DESC){
+          if(orderBy == OrderBy.DESC){
             flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration).reversed());
           }
         }
