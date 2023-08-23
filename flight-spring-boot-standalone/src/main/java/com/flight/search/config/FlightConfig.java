@@ -13,13 +13,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FlightConfig {
 
-  /**
-   * Flight service flight service.
-   *
-   * @return the flight service
-   */
-  @Bean
-  public FlightService flightService() {
-    return new FlightServiceImpl();
-  }
 }
