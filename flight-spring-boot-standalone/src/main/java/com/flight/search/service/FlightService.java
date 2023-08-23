@@ -21,7 +21,7 @@ public interface FlightService {
    * @return the list
    */
 List<FlightDetailsDto> searchFlights(
-      @RequestParam String origin,
-      @RequestParam String destination,
-      @RequestParam(required = false) SortBy sortBy) throws Exception;
+      String origin,
+      String destination,
+      SortBy sortBy) throws Exception;
 }
