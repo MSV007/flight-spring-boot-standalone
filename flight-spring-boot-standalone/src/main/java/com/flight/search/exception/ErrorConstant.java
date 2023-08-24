@@ -8,7 +8,7 @@ public class ErrorConstant {
   /** The constant ERROR_MESSAGE. */
   public static String ERROR_MESSAGE = "errorMessage";
   /** The constant ERROR. */
-  public static String ERROR = "timestamp";
+  public static String ERROR = "error";
   /** The constant GENERIC_EXCEPTION_MESSAGE. */
   public static String GENERIC_EXCEPTION_MESSAGE = "An error occurred while processing request :";
   /** The constant FILE_NOT_FOUND_EXCEPTION_MESSAGE. */
