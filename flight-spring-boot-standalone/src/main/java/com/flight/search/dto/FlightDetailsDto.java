@@ -8,10 +8,9 @@ import java.time.LocalDateTime;
  * @author Manish Kumar
  */
 @Data
-@AllArgsConstructor
 @Builder
-@Setter
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class FlightDetailsDto {
   private String flightNumber;
   private String origin;
