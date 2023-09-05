@@ -10,10 +10,7 @@ import lombok.*;
 @Entity
 @Table(name = "FLIGHT_DETAILS")
 @Builder
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
+@Data
 public class FlightDetailsEntity {
 
   @Id
