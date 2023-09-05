@@ -21,5 +21,5 @@ public interface FlightRepository extends JpaRepository<FlightDetailsEntity, Str
    * @return the list
    */
 List<FlightDetailsEntity> findByOriginAndDestination(
-      @Param("origin") String origin, @Param("destination") String destination);
+      String origin, String destination);
 }
