@@ -34,7 +34,7 @@ class FlightControllerTests {
 
   /** Test get flights origin to destination. using in-memory database */
   @Test
-  public void testGetFlights_OriginToDestination() throws Exception {
+  public void testGetFlights_OriginToDestination() {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
@@ -44,12 +44,12 @@ class FlightControllerTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T19:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T19:30:00")))
             .price(750)
             .currency("EUR")
             .build());
@@ -58,12 +58,12 @@ class FlightControllerTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T18:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T18:30:00")))
             .price(850)
             .currency("EUR")
             .build());
@@ -80,7 +80,7 @@ class FlightControllerTests {
 
   /** Test get flights origin to destination and sorted by price. using in-memory database */
   @Test
-  public void testGetFlights_OriginToDestinationAndSortedByPriceAscOrder() throws Exception {
+  public void testGetFlights_OriginToDestinationAndSortedByPriceAscOrder() {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
@@ -92,12 +92,12 @@ class FlightControllerTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T19:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T19:30:00")))
             .price(750)
             .currency("EUR")
             .build());
@@ -106,12 +106,12 @@ class FlightControllerTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T18:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T18:30:00")))
             .price(850)
             .currency("EUR")
             .build());
@@ -125,7 +125,7 @@ class FlightControllerTests {
   }
 
   @Test
-  public void testGetFlights_OriginToDestinationAndSortedByPriceDescOrder() throws Exception {
+  public void testGetFlights_OriginToDestinationAndSortedByPriceDescOrder() {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
@@ -137,12 +137,12 @@ class FlightControllerTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T18:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T18:30:00")))
             .price(850)
             .currency("EUR")
             .build());
@@ -151,12 +151,12 @@ class FlightControllerTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T19:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T19:30:00")))
             .price(750)
             .currency("EUR")
             .build());
@@ -173,7 +173,7 @@ class FlightControllerTests {
 
   /** Test get flights origin to destination and sorted by duration. using in-memory database */
   @Test
-  public void testGetFlights_OriginToDestinationAndSortedByDurationAscOrder() throws Exception {
+  public void testGetFlights_OriginToDestinationAndSortedByDurationAscOrder() {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
@@ -185,12 +185,12 @@ class FlightControllerTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T18:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T18:30:00")))
             .price(850)
             .currency("EUR")
             .build());
@@ -199,12 +199,12 @@ class FlightControllerTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T19:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T19:30:00")))
             .price(750)
             .currency("EUR")
             .build());
@@ -220,7 +220,7 @@ class FlightControllerTests {
   }
 
   @Test
-  public void testGetFlights_OriginToDestinationAndSortedByDurationDescOrder() throws Exception {
+  public void testGetFlights_OriginToDestinationAndSortedByDurationDescOrder() {
     // Arrange
     String origin = "AMS";
     String destination = "BOM";
@@ -232,12 +232,12 @@ class FlightControllerTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T19:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T19:30:00")))
             .price(750)
             .currency("EUR")
             .build());
@@ -246,12 +246,12 @@ class FlightControllerTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .duration(
                 getDuration(
-                    LocalDateTime.parse("2023-08-28T12:00:00"),
-                    LocalDateTime.parse("2023-08-28T18:30:00")))
+                    LocalDateTime.parse("2023-10-28T12:00:00"),
+                    LocalDateTime.parse("2023-10-28T18:30:00")))
             .price(850)
             .currency("EUR")
             .build());

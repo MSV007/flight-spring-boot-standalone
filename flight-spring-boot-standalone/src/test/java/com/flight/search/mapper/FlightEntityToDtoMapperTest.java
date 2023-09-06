@@ -29,8 +29,8 @@ public class FlightEntityToDtoMapperTest {
                         .flightNumber("B101")
                         .origin("AMS")
                         .destination("BOM")
-                        .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-                        .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+                        .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+                        .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
                         .price(750)
                         .currency("EUR")
                         .build());
@@ -42,12 +42,12 @@ public class FlightEntityToDtoMapperTest {
                         .flightNumber("B101")
                         .origin("AMS")
                         .destination("BOM")
-                        .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-                        .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+                        .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+                        .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
                         .duration(
                                 getDuration(
-                                        LocalDateTime.parse("2023-08-28T12:00:00"),
-                                        LocalDateTime.parse("2023-08-28T19:30:00")))
+                                        LocalDateTime.parse("2023-10-28T12:00:00"),
+                                        LocalDateTime.parse("2023-10-28T19:30:00")))
                         .price(750)
                         .currency("EUR")
                         .build());

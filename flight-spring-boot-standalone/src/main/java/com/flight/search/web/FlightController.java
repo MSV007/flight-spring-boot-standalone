@@ -13,35 +13,35 @@ import java.util.List;
 
 /**
  * The type Flight controller.
+ *
  * @author Manish Kumar
  */
 @RestController
 @RequestMapping("/flights")
 public class FlightController {
 
-  private FlightService flightService;
+  private final FlightService flightService;
 
-  public FlightController(final FlightService flightService){
+  public FlightController(final FlightService flightService) {
     this.flightService = flightService;
   }
 
-
-/**
- * Gets flights.
- *
- * @param origin the origin
- * @param destination the destination
- * @param sortBy the sort by
- * @param orderBy the order by
- * @return the flights
- * @throws Exception the exception
- */
-@GetMapping("/v1/getFlights")
+  /**
+   * Gets flights.
+   *
+   * @param origin the origin
+   * @param destination the destination
+   * @param sortBy the sort by
+   * @param orderBy the order by
+   * @return the flights
+   * @throws Exception the exception
+   */
+  @GetMapping("/v1/getFlights")
   public List<FlightDetailsDto> getFlights(
       @RequestParam String origin,
       @RequestParam String destination,
       @RequestParam(required = false) SortBy sortBy,
-      @RequestParam(required = false) OrderBy orderBy) throws Exception{
+      @RequestParam(required = false) OrderBy orderBy) {
     return flightService.searchFlights(origin, destination, sortBy, orderBy);
   }
 }

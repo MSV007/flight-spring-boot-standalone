@@ -8,6 +8,8 @@ import com.flight.search.exception.FlightNotFoundException;
 import com.flight.search.exception.GenericException;
 import com.flight.search.exception.SQLException;
 import com.flight.search.mapper.FlightEntityToDtoMapper;
+import com.flight.search.repo.FlightRepository;
+import org.hibernate.JDBCException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
@@ -16,7 +18,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * The type Flight service tests.
@@ -44,8 +54,8 @@ public class FlightServiceTests {
                     .flightNumber("B101")
                     .origin("AMS")
                     .destination("BOM")
-                    .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-                    .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+                    .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+                    .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
                     .price(750)
                     .currency("EUR")
                     .build());
@@ -54,8 +64,8 @@ public class FlightServiceTests {
                     .flightNumber("B102")
                     .origin("AMS")
                     .destination("BOM")
-                    .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-                    .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+                    .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+                    .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
                     .price(850)
                     .currency("EUR")
                     .build());
@@ -65,7 +75,7 @@ public class FlightServiceTests {
             flightService.searchFlights("AMS", "BOM", null, null);
 
     // Assert that the actual flights are the same as the expected flights
-    Assertions.assertEquals(expectedFlights, actualFlights);
+    assertEquals(expectedFlights, actualFlights);
   }
 
   /**
@@ -81,8 +91,8 @@ public class FlightServiceTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .price(750)
             .currency("EUR")
             .build());
@@ -91,8 +101,8 @@ public class FlightServiceTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .price(850)
             .currency("EUR")
             .build());
@@ -102,7 +112,7 @@ public class FlightServiceTests {
         flightService.searchFlights("AMS", "BOM", SortBy.PRICE, OrderBy.ASC);
 
     // Assert that the actual flights are the same as the expected flights
-    Assertions.assertEquals(expectedFlights, actualFlights);
+    assertEquals(expectedFlights, actualFlights);
   }
 
   /**
@@ -118,8 +128,8 @@ public class FlightServiceTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .price(850)
             .currency("EUR")
             .build());
@@ -128,8 +138,8 @@ public class FlightServiceTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .price(750)
             .currency("EUR")
             .build());
@@ -139,7 +149,7 @@ public class FlightServiceTests {
         flightService.searchFlights("AMS", "BOM", SortBy.PRICE, OrderBy.DESC);
 
     // Assert that the actual flights are the same as the expected flights
-    Assertions.assertEquals(expectedFlights, actualFlights);
+    assertEquals(expectedFlights, actualFlights);
   }
 
   /**
@@ -155,8 +165,8 @@ public class FlightServiceTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .price(850)
             .currency("EUR")
             .build());
@@ -165,8 +175,8 @@ public class FlightServiceTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .price(750)
             .currency("EUR")
             .build());
@@ -176,7 +186,7 @@ public class FlightServiceTests {
     List<FlightDetailsDto> actualFlights =
         flightService.searchFlights("AMS", "BOM", SortBy.DURATION, OrderBy.ASC);
     // Assert that the actual flights are the same as the expected flights
-    Assertions.assertEquals(expectedFlights, actualFlights);
+    assertEquals(expectedFlights, actualFlights);
   }
 
   /**
@@ -192,8 +202,8 @@ public class FlightServiceTests {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .price(750)
             .currency("EUR")
             .build());
@@ -202,8 +212,8 @@ public class FlightServiceTests {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .price(850)
             .currency("EUR")
             .build());
@@ -213,76 +223,108 @@ public class FlightServiceTests {
     List<FlightDetailsDto> actualFlights =
         flightService.searchFlights("AMS", "BOM", SortBy.DURATION, OrderBy.DESC);
     // Assert that the actual flights are the same as the expected flights
-    Assertions.assertEquals(expectedFlights, actualFlights);
+    assertEquals(expectedFlights, actualFlights);
   }
 
-  /** Test search flights flight not found exception. */
+  /**
+   * Test search flights flight not found exception.
+   */
 @Test
   public void testSearchFlights_FlightNotFoundException() {
-    String origin = "AMS";
-    String destination = "BOL";
-    SortBy sortBy = SortBy.DURATION;
-    OrderBy orderBy = OrderBy.ASC;
+    // Arrange
 
-    // Create a FlightNotFoundException object
-    FlightNotFoundException thrownException =
-        Assertions.assertThrows(
-            FlightNotFoundException.class,
-            () -> {
-              List<FlightDetailsDto> flights =
-                  flightService.searchFlights(origin, destination, sortBy, orderBy);
-              if (flights.isEmpty()) {
-                throw new FlightNotFoundException("Flights are not available for this route :");
-              }
-            });
-
-    // Assert that the message of the exception is correct
-    Assertions.assertEquals(
-        "Flights are not available for this route :", thrownException.getMessage());
-  }
-
-  /** Test search flights generic exception. */
-@Test
-  public void testSearchFlights_GenericException() {
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.DURATION;
     OrderBy orderBy = OrderBy.ASC;
+    FlightRepository flightRepository = mock(FlightRepository.class);
+    List<FlightDetailsEntity> flightEntityList = new ArrayList<>();
 
-    // Create a GenericException object
-    GenericException thrownException =
-        Assertions.assertThrows(
-            GenericException.class,
-            () -> {
-              List<FlightDetailsDto> flights =
-                  flightService.searchFlights(origin, destination, sortBy, orderBy);
-              throw new GenericException("An error occurred while processing request :");
-            });
+    when(flightRepository.findByOriginAndDestination(anyString(), anyString())).thenReturn(flightEntityList);
 
-    // Assert that the message of the exception is correct
-    Assertions.assertEquals(
-        "An error occurred while processing request :", thrownException.getMessage());
+    FlightService flightService = new FlightServiceImpl(flightRepository);
+
+    // Act and Assert
+    FlightNotFoundException exception = assertThrows(FlightNotFoundException.class, () -> {
+      flightService.searchFlights(origin, destination, sortBy, orderBy);
+    });
+
+    assertEquals("Flights are not available for this route :", exception.getMessage());
   }
 
-  /** Test search flights sql exception. */
+  /**
+   * Test search flights sql exception.
+   */
 @Test
   public void testSearchFlights_SQLException() {
+    // Arrange
     String origin = "AMS";
     String destination = "BOM";
     SortBy sortBy = SortBy.DURATION;
     OrderBy orderBy = OrderBy.ASC;
+    FlightRepository flightRepository = mock(FlightRepository.class);
 
-    // Create a SQLException object
-    SQLException thrownException =
-        Assertions.assertThrows(
-            SQLException.class,
-            () -> {
-              List<FlightDetailsDto> flights =
-                  flightService.searchFlights(origin, destination, sortBy, orderBy);
-              throw new SQLException("An SQL error occurred :");
-            });
+    when(flightRepository.findByOriginAndDestination(anyString(), anyString())).thenThrow(new JDBCException("SQL Exception", null, null));
 
-    // Assert that the message of the exception is correct
-    Assertions.assertEquals("An SQL error occurred :", thrownException.getMessage());
+    FlightService flightService = new FlightServiceImpl(flightRepository);
+
+    // Act and Assert
+    SQLException exception = assertThrows(SQLException.class, () -> {
+      flightService.searchFlights(origin, destination, sortBy, orderBy);
+    });
+
+    assertEquals("An SQL error occurred :", exception.getMessage());
   }
+
+  /**
+   * Test search flights generic exception.
+   */
+@Test
+  public void testSearchFlights_GenericException() {
+    // Arrange
+    String origin = "AMS";
+    String destination = "BOM";
+    SortBy sortBy = SortBy.DURATION;
+    OrderBy orderBy = OrderBy.ASC;
+    FlightRepository flightRepository = mock(FlightRepository.class);
+
+    when(flightRepository.findByOriginAndDestination(anyString(), anyString())).thenThrow(new JDBCException("SQL Exception", null, null));
+
+    FlightService flightService = new FlightServiceImpl(flightRepository);
+
+    // Act and Assert
+    SQLException exception = assertThrows(SQLException.class, () -> {
+      flightService.searchFlights(origin, destination, sortBy, orderBy);
+    });
+
+    assertEquals("An SQL error occurred :", exception.getMessage());
+  }
+
+  /**
+   * Test search flights generic exception with dates.
+   */
+@Test
+  public void testSearchFlights_GenericExceptionWithDates() {
+    // Arrange
+    String origin = "AMS";
+    String destination = "BOM";
+    SortBy sortBy = SortBy.DURATION;
+    OrderBy orderBy = OrderBy.ASC;
+    FlightRepository flightRepository = mock(FlightRepository.class);
+    List<FlightDetailsEntity> flightEntityList = new ArrayList<>();
+    flightEntityList.add(FlightDetailsEntity.builder().flightNumber("AMS").build());
+    when(flightRepository.findByOriginAndDestination(anyString(), anyString())).thenReturn(flightEntityList);
+
+    // Mock FlightEntityToDtoMapper to throw an exception
+    FlightEntityToDtoMapper mapper = mock(FlightEntityToDtoMapper.class);
+    FlightService flightService = new FlightServiceImpl(flightRepository);
+
+    // Act and Assert
+    GenericException exception = assertThrows(GenericException.class, () -> {
+      flightService.searchFlights(origin, destination, sortBy, orderBy);
+    });
+
+    assertEquals("An error occurred while processing request :", exception.getMessage());
+  }
+
 }

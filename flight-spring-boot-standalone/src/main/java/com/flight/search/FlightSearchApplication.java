@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * The type Flight search application.
+ *
  * @author Manish Kumar
  */
 @SpringBootApplication

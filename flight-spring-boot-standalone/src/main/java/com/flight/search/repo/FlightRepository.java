@@ -2,13 +2,13 @@ package com.flight.search.repo;
 
 import com.flight.search.entity.FlightDetailsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * The interface Flight service repository.
+ *
  * @author Manish Kumar
  */
 @Repository
@@ -20,6 +20,5 @@ public interface FlightRepository extends JpaRepository<FlightDetailsEntity, Str
    * @param destination the destination
    * @return the list
    */
-List<FlightDetailsEntity> findByOriginAndDestination(
-      String origin, String destination);
+  List<FlightDetailsEntity> findByOriginAndDestination(String origin, String destination);
 }

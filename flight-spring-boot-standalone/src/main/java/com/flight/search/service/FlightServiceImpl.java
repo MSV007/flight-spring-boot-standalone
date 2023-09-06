@@ -25,59 +25,76 @@ import static com.flight.search.exception.ErrorConstant.*;
 @Service
 public class FlightServiceImpl implements FlightService {
 
-  private FlightRepository flightRepository;
+  private final FlightRepository flightRepository;
 
   /**
    * Instantiates a new Flight service.
    *
    * @param flightRepository the flight repository
    */
-  public FlightServiceImpl(final FlightRepository flightRepository) {
+  public FlightServiceImpl(FlightRepository flightRepository) {
     this.flightRepository = flightRepository;
   }
 
   @Override
-  public List<FlightDetailsDto> searchFlights(String origin, String destination, SortBy sortBy, OrderBy orderBy)
-      throws Exception {
+  public List<FlightDetailsDto> searchFlights(
+      String origin, String destination, SortBy sortBy, OrderBy orderBy) {
+    List<FlightDetailsEntity> flightEntityList = getFlightDetailsEntities(origin, destination);
+    return getDetailsDto(sortBy, orderBy, flightEntityList);
+  }
+
+  private List<FlightDetailsEntity> getFlightDetailsEntities(String origin, String destination) {
     List<FlightDetailsEntity> flightEntityList;
-    List<FlightDetailsDto> flightDtoList;
     try {
       flightEntityList = flightRepository.findByOriginAndDestination(origin, destination);
+      if (flightEntityList.isEmpty()) {
+        throw new FlightNotFoundException(FILE_NOT_FOUND_EXCEPTION_MESSAGE);
+      }
     } catch (JDBCException e) {
       throw new SQLException(SQL_EXCEPTION_MESSAGE, e);
     }
-    if (flightEntityList.isEmpty()) {
-      throw new FlightNotFoundException(FILE_NOT_FOUND_EXCEPTION_MESSAGE);
-    }
+    return flightEntityList;
+  }
+
+  private List<FlightDetailsDto> getDetailsDto(
+      SortBy sortBy, OrderBy orderBy, List<FlightDetailsEntity> flightEntityList) {
     try {
-      flightDtoList = getFlightDetailsDtos(sortBy, orderBy, flightEntityList);
+      List<FlightDetailsDto> flightDtoList = FlightEntityToDtoMapper.mapToDTOs(flightEntityList);
+      if (sortBy != null) {
+        return getFlightDetailsDto(sortBy, orderBy, flightDtoList);
+      } else {
+        return flightDtoList;
+      }
     } catch (Exception e) {
       throw new GenericException(GENERIC_EXCEPTION_MESSAGE, e);
     }
-    return flightDtoList;
   }
 
-  private List<FlightDetailsDto> getFlightDetailsDtos(
-          SortBy sortBy, OrderBy orderBy, List<FlightDetailsEntity> flightEntityList) throws GenericException {
-    List<FlightDetailsDto> flightDtoList;
+  private List<FlightDetailsDto> getFlightDetailsDto(
+      SortBy sortBy, OrderBy orderBy, List<FlightDetailsDto> flightDtoList) {
     try {
-      flightDtoList = FlightEntityToDtoMapper.mapToDTOs(flightEntityList);
-      if (sortBy != null) {
-        if (sortBy == SortBy.PRICE) {
-          flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice));
-          if(orderBy == OrderBy.DESC){
-            flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice).reversed());
-          }
-        } else if (sortBy == SortBy.DURATION) {
-          flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration));
-          if(orderBy == OrderBy.DESC){
-            flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration).reversed());
-          }
-        }
+      if (sortBy.equals(SortBy.PRICE)) {
+        flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice));
+        priceOrderByDesc(orderBy, flightDtoList);
+      } else if (sortBy.equals(SortBy.DURATION)) {
+        flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration));
+        durationOrderByDesc(orderBy, flightDtoList);
       }
     } catch (Exception e) {
       throw new GenericException(GENERIC_EXCEPTION_MESSAGE, e);
     }
     return flightDtoList;
+  }
+
+  private void durationOrderByDesc(OrderBy orderBy, List<FlightDetailsDto> flightDtoList) {
+    if (OrderBy.DESC.equals(orderBy)) {
+      flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getDuration).reversed());
+    }
+  }
+
+  private void priceOrderByDesc(OrderBy orderBy, List<FlightDetailsDto> flightDtoList) {
+    if (OrderBy.DESC.equals(orderBy)) {
+      flightDtoList.sort(Comparator.comparing(FlightDetailsDto::getPrice).reversed());
+    }
   }
 }

@@ -27,5 +27,5 @@ List<FlightDetailsDto> searchFlights(
       String origin,
       String destination,
       SortBy sortBy,
-      OrderBy orderBy) throws Exception;
+      OrderBy orderBy);
 }

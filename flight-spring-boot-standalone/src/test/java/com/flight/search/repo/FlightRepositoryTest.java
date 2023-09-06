@@ -31,8 +31,8 @@ public class FlightRepositoryTest {
             .flightNumber("B101")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T19:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T19:30:00"))
             .price(750)
             .currency("EUR")
             .build());
@@ -41,8 +41,8 @@ public class FlightRepositoryTest {
             .flightNumber("B102")
             .origin("AMS")
             .destination("BOM")
-            .departureTime(LocalDateTime.parse("2023-08-28T12:00:00"))
-            .arrivalTime(LocalDateTime.parse("2023-08-28T18:30:00"))
+            .departureTime(LocalDateTime.parse("2023-10-28T12:00:00"))
+            .arrivalTime(LocalDateTime.parse("2023-10-28T18:30:00"))
             .price(850)
             .currency("EUR")
             .build());

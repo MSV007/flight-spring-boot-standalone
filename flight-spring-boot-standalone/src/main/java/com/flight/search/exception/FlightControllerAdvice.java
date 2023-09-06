@@ -21,13 +21,13 @@ public class FlightControllerAdvice {
    * @param ex the ex
    * @return the map
    */
-  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @ExceptionHandler(FlightNotFoundException.class)
   public Map<String, String> handleBusinessException(FlightNotFoundException ex) {
     Map<String, String> errorMap = new HashMap<>();
     errorMap.put(TIMESTAMP, String.valueOf(LocalDateTime.now()));
     errorMap.put(ERROR_MESSAGE, ex.getMessage());
-    errorMap.put(ERROR, HttpStatus.NOT_FOUND.name());
+    errorMap.put(ERROR, HttpStatus.NO_CONTENT.name());
     return errorMap;
   }
 
