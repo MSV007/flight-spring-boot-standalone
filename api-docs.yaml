@@ -1,0 +1,97 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8085/flightsapi
+  description: Generated server url
+paths:
+  /flights/v1/getFlights:
+    get:
+      tags:
+      - flight-controller
+      operationId: getFlights
+      parameters:
+      - name: origin
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: destination
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: sortBy
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - PRICE
+          - DURATION
+      - name: orderBy
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - ASC
+          - DESC
+      responses:
+        "204":
+          description: No Content
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        "422":
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        "500":
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FlightDetailsDto'
+components:
+  schemas:
+    FlightDetailsDto:
+      type: object
+      properties:
+        flightNumber:
+          type: string
+        origin:
+          type: string
+        destination:
+          type: string
+        departureTime:
+          type: string
+          format: date-time
+        arrivalTime:
+          type: string
+          format: date-time
+        duration:
+          type: string
+        price:
+          type: number
+          format: double
+        currency:
+          type: string
